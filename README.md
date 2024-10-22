@@ -22,6 +22,7 @@ This application fetches a file from the local filesystem, decodes it, and retur
 
 1. Clone this repository.
 2. Install the required dependencies:
+
    ```
    pip install -r requirements.txt
    ```
@@ -33,11 +34,13 @@ You can run the application using the following method:
 ### Using Flask with HTTPS
 
 1. Make the run script executable:
+
    ```
    chmod +x run.sh
    ```
 
 2. Run the script:
+
    ```
    ./run.sh
    ```
