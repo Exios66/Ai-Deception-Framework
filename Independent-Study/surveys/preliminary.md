@@ -1,3 +1,5 @@
+# Introduction Survey
+
 Section 1: Demographics and General Technology Use
 
 This section helps to contextualize the responses and can control for confounding variables.
@@ -13,7 +15,8 @@ The goal is to understand the participant’s general exposure to and familiarit
 
 	1.	How familiar are you with Artificial Intelligence tools?
 (Likert scale: 1 = Not familiar at all, 5 = Extremely familiar)
-	2.	Which of the following AI-based tools have you used? (Check all that apply)
+	2.	Which of the following AI-based tools have you used?
+(Check all that apply)
 	•	AI-powered virtual assistants (e.g., Siri, Alexa, Google Assistant)
 	•	Image generation tools (e.g., MidJourney, DALL·E)
 	•	Large language models (e.g., ChatGPT, Bard)
@@ -30,7 +33,8 @@ This section narrows the focus to LLMs, like ChatGPT, to gauge experience.
 (Yes/No)
 	•	If Yes, how often do you use LLMs?
 (Multiple choice: Less than once a month, 1-3 times a month, Weekly, Daily)
-	2.	For what purposes have you used LLMs? (Check all that apply)
+	2.	For what purposes have you used LLMs?
+(Check all that apply)
 	•	Generating content (e.g., writing, creative tasks)
 	•	Learning or understanding concepts
 	•	Code generation or debugging
@@ -54,7 +58,8 @@ These questions aim to assess the participants’ trust and confidence in determ
 (Yes/No)
 	•	If Yes, how often do you encounter such errors?
 (Multiple choice: Rarely, Sometimes, Often, Always)
-	5.	When presented with information from LLMs, how do you usually verify its accuracy? (Check all that apply)
+	5.	When presented with information from LLMs, how do you usually verify its accuracy?
+(Check all that apply)
 	•	I check multiple sources.
 	•	I trust the information without verifying it.
 	•	I use my own knowledge or expertise.
@@ -90,9 +95,10 @@ Example Grouping Logic:
 	•	Medium Experience: Scores 3 on these scales.
 	•	High Experience: Scores 4-5 on these scales.
 
-***
+Scoring Template
 
-Question,Answer Options,Points (for scoring)
-How familiar are you with Artificial Intelligence tools?,Likert scale (1 = Not familiar at all, 5 = Extremely familiar),1 to 5
-Which of the following AI-based tools have you used?,Check all that apply,1 point for each selection, up to 4 points (None = 0 points)
-How often do you use AI-based tools in your daily life?,Never (0), Less than once a week (1), 1-3 times a week (2), Almost every day (3), Daily (4),0 to 4
+Question	Answer Options	Points (for scoring)
+How familiar are you with Artificial Intelligence tools?	Likert scale (1 = Not familiar at all, 5 = Extremely familiar)	1 to 5
+Which of the following AI-based tools have you used?	Check all that apply	1 point for each selection, up to 4 points (None = 0 points)
+How often do you use AI-based tools in your daily life?	Never (0), Less than once a week (1), 1-3 times a week (2), Almost every day (3), Daily (4)	0 to 4
+
