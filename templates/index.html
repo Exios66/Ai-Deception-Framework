@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section id="home">
+        <h2>Welcome to the AI Deception Framework</h2>
+        <p>Uncover hidden truths in AI systems with our advanced deception detection tools.</p>
+    </section>
+
+    <section id="analysis">
+        <h2>AI Model Analysis</h2>
+        <p>Upload your AI model for comprehensive analysis:</p>
+        <form id="model-upload-form">
+            <input type="file" name="model" accept=".h5,.pkl,.json" required>
+            <button type="submit">Analyze Model</button>
+        </form>
+        <div id="analysis-results"></div>
+    </section>
+
+    <section id="detection">
+        <h2>Deception Detection</h2>
+        <p>Test AI-generated content for potential deception:</p>
+        <textarea id="content-input" placeholder="Paste AI-generated content here..." rows="5"></textarea>
+        <button id="detect-deception">Detect Deception</button>
+        <div id="detection-results"></div>
+    </section>
+
+    <section id="dashboard">
+        <h2>Deception Metrics Dashboard</h2>
+        <div id="metrics-container">
+            <!-- Metrics will be dynamically inserted here -->
+        </div>
+    </section>
+{% endblock %}
