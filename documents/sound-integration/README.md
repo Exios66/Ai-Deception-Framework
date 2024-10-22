@@ -7,9 +7,9 @@ Step 1: Repository Structure
 	•	Upload the file start-sound.mp3 to the root directory.
 	2.	File Structure:
 
-sound-host/
-├── start-sound.mp3  # Your audio file
-└── README.md        # Optional documentation
+	sound-host/
+	├── start-sound.mp3  # Your audio file
+	└── README.md        # Optional documentation
 
 
 	3.	Enable GitHub Pages:
