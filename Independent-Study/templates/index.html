@@ -4,22 +4,212 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Deception Framework</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --accent-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="file"], textarea {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        #analysis-results, #detection-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+
+        #metrics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .metric-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        #github-status {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #github-status-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin-bottom: 0.5rem;
+            }
+
+            #metrics-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>AI Deception Framework</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#analysis">Analysis</a></li>
-                <li><a href="#detection">Detection</a></li>
-                <li><a href="#dashboard">Dashboard</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <h1>AI Deception Framework</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#analysis">Analysis</a></li>
+                    <li><a href="#detection">Detection</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main>
+    <div id="github-status">
+        <div id="github-status-icon"></div>
+        <span id="github-status-text">Checking GitHub status...</span>
+    </div>
+
+    <main class="container">
         <section id="home">
             <h2>Welcome to the AI Deception Framework</h2>
             <p>Uncover hidden truths in AI systems with our advanced deception detection tools.</p>
@@ -56,6 +246,106 @@
         <p>&copy; 2024 AI Deception Framework. All rights reserved.</p>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // GitHub status verification
+            function checkGitHubStatus() {
+                const statusIcon = document.getElementById('github-status-icon');
+                const statusText = document.getElementById('github-status-text');
+
+                // Simulating an API call to check GitHub status
+                setTimeout(() => {
+                    const isRunningLocally = Math.random() < 0.5; // Randomly determine status for demo purposes
+                    if (isRunningLocally) {
+                        statusIcon.style.backgroundColor = '#2ecc71';
+                        statusText.textContent = 'Running locally';
+                    } else {
+                        statusIcon.style.backgroundColor = '#e74c3c';
+                        statusText.textContent = 'Not running locally';
+                    }
+                }, 1500);
+            }
+
+            checkGitHubStatus();
+
+            // Model upload form submission
+            const modelUploadForm = document.getElementById('model-upload-form');
+            const analysisResults = document.getElementById('analysis-results');
+
+            modelUploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                
+                // Simulating API call for model analysis
+                analysisResults.innerHTML = '<p>Analyzing model... Please wait.</p>';
+                setTimeout(() => {
+                    analysisResults.innerHTML = `
+                        <h3>Analysis Results</h3>
+                        <p>Model Type: Convolutional Neural Network</p>
+                        <p>Accuracy: 94.3%</p>
+                        <p>Potential Deception Points: 2</p>
+                        <p>Recommendation: Further investigation required on layers 3 and 7.</p>
+                    `;
+                }, 3000);
+            });
+
+            // Deception detection
+            const detectDeceptionBtn = document.getElementById('detect-deception');
+            const contentInput = document.getElementById('content-input');
+            const detectionResults = document.getElementById('detection-results');
+
+            detectDeceptionBtn.addEventListener('click', function() {
+                const content = contentInput.value.trim();
+                if (content) {
+                    detectionResults.innerHTML = '<p>Analyzing content... Please wait.</p>';
+                    // Simulating API call for deception detection
+                    setTimeout(() => {
+                        detectionResults.innerHTML = `
+                            <h3>Deception Analysis</h3>
+                            <p>Deception Probability: 73%</p>
+                            <p>Confidence: High</p>
+                            <p>Detected Issues:</p>
+                            <ul>
+                                <li>Inconsistent information</li>
+                                <li>Emotional manipulation</li>
+                                <li>Lack of verifiable sources</li>
+                            </ul>
+                        `;
+                    }, 2000);
+                } else {
+                    detectionResults.innerHTML = '<p>Please enter some content to analyze.</p>';
+                }
+            });
+
+            // Dashboard metrics
+            const metricsContainer = document.getElementById('metrics-container');
+            const metrics = [
+                { title: 'Total Analyses', value: 1287 },
+                { title: 'Deceptions Detected', value: 342 },
+                { title: 'Average Accuracy', value: '91.8%' },
+                { title: 'Active Users', value: 76 }
+            ];
+
+            metrics.forEach(metric => {
+                const metricCard = document.createElement('div');
+                metricCard.classList.add('metric-card');
+                metricCard.innerHTML = `
+                    <div class="metric-title">${metric.title}</div>
+                    <div class="metric-value">${metric.value}</div>
+                `;
+                metricsContainer.appendChild(metricCard);
+            });
+
+            // Smooth scrolling for navigation
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
