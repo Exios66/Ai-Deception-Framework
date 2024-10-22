@@ -1,86 +1,121 @@
 # AI Deception Framework
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.x-brightgreen.svg)
+![Flask](https://img.shields.io/badge/flask-v2.0+-brightgreen.svg)
+
 ## Overview
 
-The AI Deception Framework is an innovative project designed to explore and analyze the potential for deception in artificial intelligence systems. This framework provides tools and methodologies for researchers, developers, and ethicists to study, detect, and mitigate deceptive behaviors in AI models.
+The **AI Deception Framework** is a research tool designed to explore the potential for deception in artificial intelligence (AI) systems. It provides mechanisms to study, detect, and mitigate deceptive behaviors in AI models. The framework is useful for researchers, developers, and ethicists interested in understanding how AI could deceive humans or other systems, whether intentionally or unintentionally.
 
 ## Features
 
-- **Deception Detection**: Advanced algorithms to identify potential deceptive patterns in AI outputs.
-- **Scenario Simulation**: Create and run various scenarios to test AI responses in controlled environments.
-- **Ethical Analysis Tools**: Evaluate the ethical implications of AI behaviors and decision-making processes.
-- **Transparency Metrics**: Measure and report on the transparency of AI systems.
-- **Mitigation Strategies**: Implement and test strategies to reduce the risk of AI deception.
+- **Deception Detection**: Algorithms to identify potential deceptive patterns in AI-generated outputs.
+- **Scenario Simulation**: Tools to simulate environments and observe AI behaviors under different controlled scenarios.
+- **Ethical Analysis**: Evaluate the ethical implications of AI decisions and behaviors.
+- **Transparency Metrics**: Measure the transparency of AI decision-making and outputs.
+- **Mitigation Strategies**: Develop and test methods to reduce deceptive behaviors in AI systems.
 
-## Installation
+## Project Structure
 
-# Local File Fetcher for GPT
-
-This application fetches a file from the local filesystem, decodes it, and returns the content along with parsed questions.
-
-## Setup
-
-1. Clone this repository.
-2. Install the required dependencies:
-
-   ```
-   pip install -r requirements.txt
-   ```
-
-## Running the Application
-
-You can run the application using the following method:
-
-### Using Flask with HTTPS
-
-1. Make the run script executable:
-
-   ```
-   chmod +x run.sh
-   ```
-
-2. Run the script:
-
-   ```
-   ./run.sh
-   ```
-
-The application will be available at `https://localhost:8000`. Note that you'll need to accept the self-signed certificate in your browser.
-
-## API Usage
-
-Send a GET request to `/fetch-local-questions` with the following query parameter:
-
-- `file_path`: The path to the file on the local filesystem
-
-Example:
-
+```bash
+├── app.py                    # Main application file
+├── requirements.txt           # Project dependencies
+├── openapi.yaml               # OpenAPI specification for API documentation
+├── Randomized_Selection.py    # Script for selection algorithms
+├── templates/                 # HTML templates for web interface
+├── static/                    # Static files like JavaScript and CSS
+└── README.md                  # Project documentation
 ```
-https://localhost:8000/fetch-local-questions?file_path=/path/to/your/questions_with_choices.db
+Installation
+
+Prerequisites
+
+Ensure you have the following installed:
+
+	•	Python 3.7 or higher
+	•	Pip package manager
+
+Setup Instructions
+
+	1.	Clone the repository:
 ```
+git clone https://github.com/Exios66/Ai-Deception-Framework.git
+cd Ai-Deception-Framework
 
-The API will return a JSON response containing the decoded content of the file and an array of parsed questions.
-
-## OpenAPI Specification
-
-The API is documented using OpenAPI 3.1.0. You can find the specification in the `openapi.yaml` file. The specification uses a relative path for the server URL:
-
-```yaml
-servers:
-  - url: /
-    description: Local development server
+	2.	Install the required dependencies:
+ 
 ```
+pip install -r requirements.txt
 
-To use this specification with OpenAPI tools or validators that require a full URL, you may need to prepend the base URL. For local development, you would use:
 
-```yaml
-servers:
-  - url: https://localhost:8000
-    description: Local development server
-```
 
-For production or other environments, replace `https://localhost:8000` with the appropriate base URL.
+Running the Application
 
-## License
+The application is built using Flask. You can run it locally as follows:
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+	1.	Make the run script executable (if using a run script):
+
+chmod +x run.sh
+
+
+	2.	Start the Flask server:
+
+./run.sh
+
+Alternatively, you can run the app manually with Python:
+
+python app.py
+
+
+	3.	Access the application at https://localhost:8000. Accept the self-signed certificate if prompted.
+
+API Documentation
+
+The framework includes an API for interacting with local files, such as parsing and fetching questions. You can use the OpenAPI specification (openapi.yaml) to explore available endpoints.
+
+Example API Request
+
+To fetch and parse questions from a local file, send a GET request to /fetch-local-questions:
+
+curl "https://localhost:8000/fetch-local-questions?file_path=/path/to/your/file.db"
+
+OpenAPI Specification
+
+The API follows the OpenAPI 3.1.0 specification, with a development server defined at https://localhost:8000. You can view the API documentation by loading the openapi.yaml file into any OpenAPI-compatible tool such as Swagger UI.
+
+Usage
+
+This framework can be used in various contexts, including:
+
+	•	Research: Studying how AI systems might engage in deceptive behaviors.
+	•	Testing: Running simulations to observe how an AI reacts in controlled deception scenarios.
+	•	Ethical Analysis: Measuring the transparency and ethicality of AI decision-making processes.
+
+Contributing
+
+Contributions are welcome! Please follow these steps to contribute:
+
+	1.	Fork the repository.
+	2.	Create a new branch (git checkout -b feature-branch).
+	3.	Make your changes and commit them (git commit -am 'Add new feature').
+	4.	Push to the branch (git push origin feature-branch).
+	5.	Open a pull request.
+
+Please ensure your code adheres to the existing coding style and passes any tests.
+
+License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+Future Plans
+
+	•	Extend the deception detection algorithms.
+	•	Improve simulation tools with more diverse and complex scenarios.
+	•	Incorporate machine learning techniques for better detection and mitigation of deceptive behavior.
+
+Acknowledgments
+
+Thanks to all contributors and users who have tested and provided feedback for this framework.
+
+This README includes clearer sections, usage instructions, API documentation, and a more structured format that follows best practices. Let me know if you'd like to add more details!
