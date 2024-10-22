@@ -1,0 +1,56 @@
+openapi: 3.1.0
+info:
+  title: Local File Fetcher for GPT
+  description: Fetches a file from the local filesystem, decodes it, and allows GPT to process the contents.
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: /
+    description: Local development server
+paths:
+  /fetch-local-questions:
+    get:
+      operationId: fetchLocalQuestions
+      summary: Fetch and decode the `questions_with_choices.db` file from the local filesystem.
+      description: Fetches the `questions_with_choices.db` file from the local filesystem, decodes it, and returns the content for GPT to process.
+      parameters:
+        - name: file_path
+          in: query
+          required: true
+          description: The path to the file on the local filesystem.
+          schema:
+            type: string
+          example: /path/to/questions_with_choices.db
+      responses:
+        "200":
+          description: File content successfully retrieved from the local filesystem.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: A message indicating successful file read and parse.
+                  questions:
+                    type: array
+                    description: An array of questions parsed from the decoded content.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        question:
+                          type: string
+                        choices:
+                          type: array
+                          items:
+                            type: string
+        "400":
+          description: Bad request. Invalid parameters provided.
+        "404":
+          description: The specified file was not found.
+        "500":
+          description: Internal server error.
