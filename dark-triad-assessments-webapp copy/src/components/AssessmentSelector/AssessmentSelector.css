@@ -1,0 +1,33 @@
+.assessment-selector {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.assessment-selector h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.assessment-selector ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.assessment-selector li {
+  margin-bottom: 1rem;
+}
+
+.assessment-selector a {
+  display: block;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  text-decoration: none;
+  color: #333;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.assessment-selector a:hover {
+  background-color: #e0e0e0;
+}

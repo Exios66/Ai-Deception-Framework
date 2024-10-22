@@ -1,0 +1,45 @@
+.visualization {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.results-chart {
+  margin-top: 2rem;
+}
+
+.trait-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.trait-label {
+  width: 150px;
+  font-weight: bold;
+}
+
+.trait-score-bar {
+  height: 30px;
+  background-color: #4CAF50;
+  color: white;
+  text-align: right;
+  padding-right: 10px;
+  line-height: 30px;
+  transition: width 0.5s ease-in-out;
+}
+
+.results-interpretation {
+  margin-top: 2rem;
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.results-interpretation h3 {
+  margin-top: 0;
+}
+
+.results-interpretation p {
+  line-height: 1.6;
+}
