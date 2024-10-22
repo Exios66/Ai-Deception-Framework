@@ -10,7 +10,8 @@
         <h2>AI Model Analysis</h2>
         <p>Upload your AI model for comprehensive analysis:</p>
         <form id="model-upload-form">
-            <input type="file" name="model" accept=".h5,.pkl,.json" required>
+            <label for="model-upload">Upload AI Model:</label>
+            <input type="file" id="model-upload" name="model" accept=".h5,.pkl,.json" required>
             <button type="submit">Analyze Model</button>
         </form>
         <div id="analysis-results"></div>
