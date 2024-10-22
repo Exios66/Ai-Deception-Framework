@@ -1,61 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Deception Framework</title>
+{% extends "base.html" %}
+
+{% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <header>
-        <h1>AI Deception Framework</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#analysis">Analysis</a></li>
-                <li><a href="#detection">Detection</a></li>
-                <li><a href="#dashboard">Dashboard</a></li>
-            </ul>
-        </nav>
-    </header>
+    <section id="home">
+        <h2>Welcome to the AI Deception Framework</h2>
+        <p>Uncover hidden truths in AI systems with our advanced deception detection tools.</p>
+    </section>
 
-    <main>
-        <section id="home">
-            <h2>Welcome to the AI Deception Framework</h2>
-            <p>Uncover hidden truths in AI systems with our advanced deception detection tools.</p>
-        </section>
+    <section id="analysis">
+        <h2>AI Model Analysis</h2>
+        <p>Upload your AI model for comprehensive analysis:</p>
+        <form id="model-upload-form">
+            <label for="model-upload">Upload AI Model:</label>
+            <input type="file" id="model-upload" name="model" accept=".h5,.pkl,.json" required>
+            <button type="submit">Analyze Model</button>
+        </form>
+        <div id="analysis-results"></div>
+    </section>
 
-        <section id="analysis">
-            <h2>AI Model Analysis</h2>
-            <p>Upload your AI model for comprehensive analysis:</p>
-            <form id="model-upload-form">
-                <label for="model-upload">Upload AI Model:</label>
-                <input type="file" id="model-upload" name="model" accept=".h5,.pkl,.json" required>
-                <button type="submit">Analyze Model</button>
-            </form>
-            <div id="analysis-results"></div>
-        </section>
+    <section id="detection">
+        <h2>Deception Detection</h2>
+        <p>Test AI-generated content for potential deception:</p>
+        <textarea id="content-input" placeholder="Paste AI-generated content here..." rows="5"></textarea>
+        <button id="detect-deception">Detect Deception</button>
+        <div id="detection-results"></div>
+    </section>
 
-        <section id="detection">
-            <h2>Deception Detection</h2>
-            <p>Test AI-generated content for potential deception:</p>
-            <textarea id="content-input" placeholder="Paste AI-generated content here..." rows="5"></textarea>
-            <button id="detect-deception">Detect Deception</button>
-            <div id="detection-results"></div>
-        </section>
-
-        <section id="dashboard">
-            <h2>Deception Metrics Dashboard</h2>
-            <div id="metrics-container">
-                <!-- Metrics will be dynamically inserted here -->
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 AI Deception Framework. All rights reserved.</p>
-    </footer>
-
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-</html>
+    <section id="dashboard">
+        <h2>Deception Metrics Dashboard</h2>
+        <div id="metrics-container">
+            <!-- Metrics will be dynamically inserted here -->
+        </div>
+    </section>
+{% endblock %}
