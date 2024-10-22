@@ -1,18 +1,18 @@
 # README - Sound.mp3
 
-Step 1: Repository Structure
+## Step 1: Repository Structure
 
-	1.	Create a GitHub Repository:
+## 1.	Create a GitHub Repository:
 	•	Repository name: sound-host
 	•	Upload the file start-sound.mp3 to the root directory.
-	2.	File Structure:
+## 2.	File Structure:
 
 	sound-host/
 	├── start-sound.mp3  # Your audio file
 	└── README.md        # Optional documentation
 
 
-	3.	Enable GitHub Pages:
+## 3.	Enable GitHub Pages:
 	•	In Settings of your sound-host repository, enable GitHub Pages by selecting the main branch and the root folder.
 	•	GitHub will provide a URL like:
 
