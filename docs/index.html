@@ -458,19 +458,32 @@
                 // Display Loading Indicator
                 displayMessage(analysisResults, '<div class="spinner"></div> Analyzing model...');
 
-                // Simulate API Call (Replace with actual API integration)
+                // Actual API integration for model analysis
                 try {
-                    await fakeApiCall(3000); // Simulated delay
-                    // Simulated Analysis Results
+                    const formData = new FormData();
+                    formData.append('model', file);
+
+                    const response = await fetch('/api/analyze-model', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('API request failed');
+                    }
+
+                    const analysisData = await response.json();
+
                     const resultsHTML = `
                         <h3>Analysis Results</h3>
-                        <p><strong>Model Type:</strong> Convolutional Neural Network</p>
-                        <p><strong>Accuracy:</strong> 94.3%</p>
-                        <p><strong>Potential Deception Points:</strong> 2</p>
-                        <p><strong>Recommendation:</strong> Further investigation required on layers 3 and 7.</p>
+                        <p><strong>Model Type:</strong> ${analysisData.modelType}</p>
+                        <p><strong>Accuracy:</strong> ${analysisData.accuracy}%</p>
+                        <p><strong>Potential Deception Points:</strong> ${analysisData.deceptionPoints}</p>
+                        <p><strong>Recommendation:</strong> ${analysisData.recommendation}</p>
                     `;
                     displayMessage(analysisResults, resultsHTML, 'success');
                 } catch (error) {
+                    console.error('Analysis error:', error);
                     displayMessage(analysisResults, 'An error occurred during analysis. Please try again later.', 'error');
                 }
             });

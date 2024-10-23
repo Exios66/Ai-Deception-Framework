@@ -93,10 +93,55 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base.metadata.create_all(bind=engine)
 
 # FastAPI app setup
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+
+# FastAPI app setup
+# FastAPI app setup
 app = FastAPI(
     title="Questions API",
     description="API for managing questions and answers",
-    version="1.0.0"
+    version="1.0.0",
+)
+
+@app.middleware("http")
+async def catch_exceptions_middleware(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except Exception as e:
+        # Log the error here
+        print(f"Caught exception: {str(e)}")
+        return JSONResponse(content={"error": "Internal server error"}, status_code=500)
+
+# Middleware
+app.add_middleware(HTTPSRedirectMiddleware)
+
+# FastAPI app setup (moved from above)
+app = FastAPI(
+    title="Questions API",
+    description="API for managing questions and answers",
+    version="1.0.0",
+)
+
+@app.middleware("http")
+async def catch_exceptions_middleware(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except Exception as e:
+        # Log the error here
+        print(f"Caught exception: {str(e)}")
+        return JSONResponse(content={"error": "Internal server error"}, status_code=500)
+
+    title="Questions API",
+    description="API for managing questions and answers",
+    version="1.0.0",
+# Remove this closing parenthesis as it's not needed and causing the "Expected expression" error
+
+# FastAPI app setup
+app = FastAPI(
+    title="Questions API",
+    description="API for managing questions and answers",
+    version="1.0.0",
 )
 
 # Middleware
@@ -108,6 +153,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Security
 security = HTTPBearer()
@@ -359,6 +405,7 @@ if __name__ == "__main__":
         app,
         host="0.0.0.0",
         port=8000,
-        ssl_keyfile="key.pem",
-        ssl_certfile="cert.pem"
+        ssl_keyfile=None,
+        ssl_certfile=None,
+        log_level="debug"  # Add this line
     )
