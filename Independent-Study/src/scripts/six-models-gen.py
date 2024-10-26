@@ -6,7 +6,80 @@ import time
 from datetime import datetime
 import random
 
-# Previous base classes and enums remain the same...
+# Enums for typed configurations
+class AgentType(Enum):
+    EXPERT = "expert"
+    FRIEND = "friend"
+    SKEPTIC = "skeptic"
+    MINIMALIST = "minimalist"
+    EDUCATOR = "educator"
+    SYNTHESIZER = "synthesizer"
+
+class InteractionStyle(Enum):
+    FORMAL = "formal"
+    CASUAL = "casual"
+    ANALYTICAL = "analytical"
+    DIRECT = "direct"
+    SUPPORTIVE = "supportive"
+    BALANCED = "balanced"
+
+@dataclass
+class AgentCharacteristics:
+    authority_level: float  # 0.0 to 1.0
+    citation_frequency: float
+    technical_depth: float
+    interaction_style: InteractionStyle
+    
+@dataclass
+class DeceptionPattern:
+    primary: str
+    secondary: str
+    tertiary: str
+    
+@dataclass
+class ConversationMarkers:
+    technical_terms_ratio: float
+    citation_density: float
+    confidence_indicators: float
+    hedge_words_frequency: float
+
+class BaseAgent:
+    def __init__(
+        self,
+        agent_type: AgentType,
+        characteristics: AgentCharacteristics,
+        deception_patterns: DeceptionPattern,
+        conversation_markers: ConversationMarkers
+    ):
+        self.agent_type = agent_type
+        self.characteristics = characteristics
+        self.deception_patterns = deception_patterns
+        self.conversation_markers = conversation_markers
+        self.conversation_history: List[Dict] = []
+        
+    def generate_response(self, context: Dict) -> str:
+        response = self._build_response_template()
+        response = self._apply_agent_characteristics(response)
+        response = self._implement_deception_patterns(response)
+        response = self._apply_conversation_markers(response)
+        self._update_conversation_history(context, response)
+        return response
+    
+    def _build_response_template(self) -> str:
+        # Implement base response structure
+        raise NotImplementedError
+    
+    def _apply_agent_characteristics(self, response: str) -> str:
+        # Apply agent-specific characteristics
+        raise NotImplementedError
+    
+    def _implement_deception_patterns(self, response: str) -> str:
+        # Implement deception patterns based on agent type
+        raise NotImplementedError
+    
+    def _apply_conversation_markers(self, response: str) -> str:
+        # Apply conversation markers based on agent type
+        raise NotImplementedError
 
 class ExpertAgent(BaseAgent):
     def __init__(self):
