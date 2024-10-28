@@ -4,6 +4,8 @@
 ![Python](https://img.shields.io/badge/python-3.x-brightgreen.svg)
 ![Flask](https://img.shields.io/badge/flask-v2.0+-brightgreen.svg)
 
+[GitBook Docs](https://morningstar-developments.gitbook.io/morningstar-docs/)
+
 ## Overview
 
 The **AI Deception Framework** is a research tool designed to explore the potential for deception in artificial intelligence (AI) systems. It provides mechanisms to study, detect, and mitigate deceptive behaviors in AI models. The framework is useful for researchers, developers, and ethicists interested in understanding how AI could deceive humans or other systems, whether intentionally or unintentionally.
