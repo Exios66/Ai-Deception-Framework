@@ -6,6 +6,7 @@ Flask==2.0.1
 flask-talisman==0.8.1
 pyopenssl==23.2.0
 pyjwt==2.6.0
+aiohttp==3.8.1
 
 
 

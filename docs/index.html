@@ -533,6 +533,79 @@
                 font-size: 1rem;
             }
         }
+
+        .category-selector {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px var(--light-shadow);
+        }
+
+        .question-card {
+            background-color: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px var(--light-shadow);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px var(--dark-shadow);
+        }
+
+        .options ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .analysis-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px var(--light-shadow);
+        }
+
+        .analysis-results {
+            margin-top: 1rem;
+        }
+
+        .issues, .recommendations {
+            margin-top: 1rem;
+        }
+
+        .error-message {
+            color: var(--accent-color);
+            padding: 1rem;
+            background-color: rgba(231, 76, 60, 0.1);
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+        }
+
+        body.dark-mode .category-selector,
+        body.dark-mode .question-card,
+        body.dark-mode .analysis-container {
+            background-color: #1e1e1e;
+            color: var(--dark-text-color);
+        }
+
+        .analyze-question {
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+
+        .analyze-question:hover {
+            background-color: var(--dark-secondary-color);
+        }
     </style>
 </head>
 <body>
@@ -595,6 +668,39 @@
             <textarea id="content-input" placeholder="Paste AI-generated content here..." rows="5" aria-label="Content Input"></textarea>
             <button id="detect-deception">Detect Deception</button>
             <div id="detection-results" aria-live="polite"></div>
+        </section>
+
+        <!-- Literary Vault Integration -->
+        <section id="literary-vault" aria-labelledby="literary-vault-heading">
+            <h2 id="literary-vault-heading">Literary Vault Integration</h2>
+            <p>Analyze questions from the Literary Vault for potential deception and bias.</p>
+            
+            <div class="category-selector">
+                <label for="category-select">Select Category:</label>
+                <select id="category-select" class="form-control">
+                    <option value="astronomy">Astronomy</option>
+                    <option value="literature">Literature</option>
+                    <option value="mathematics">Mathematics</option>
+                </select>
+                
+                <label for="question-limit">Number of Questions:</label>
+                <input type="number" id="question-limit" min="1" max="50" value="5" class="form-control">
+                
+                <div class="form-check">
+                    <input type="checkbox" id="random-questions" class="form-check-input" checked>
+                    <label for="random-questions" class="form-check-label">Randomize Questions</label>
+                </div>
+                
+                <button id="fetch-questions" class="primary-button">Fetch Questions</button>
+            </div>
+
+            <div id="questions-container" class="results-container">
+                <!-- Questions will be displayed here -->
+            </div>
+
+            <div id="question-analysis" class="analysis-container">
+                <!-- Question analysis results will be shown here -->
+            </div>
         </section>
 
         <!-- Deception Metrics Dashboard Section -->
@@ -925,6 +1031,106 @@
                 if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
                     e.preventDefault();
                     detectDeceptionBtn.click();
+                }
+            });
+
+            document.getElementById('fetch-questions').addEventListener('click', async function() {
+                const category = document.getElementById('category-select').value;
+                const limit = document.getElementById('question-limit').value;
+                const random = document.getElementById('random-questions').checked;
+                const questionsContainer = document.getElementById('questions-container');
+                const analysisContainer = document.getElementById('question-analysis');
+
+                try {
+                    // Show loading state
+                    questionsContainer.innerHTML = '<div class="spinner"></div>';
+                    
+                    // Fetch questions
+                    const response = await fetch(`/api/v1/literary-vault/questions/${category}?limit=${limit}&random=${random}`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+                    
+                    if (!response.ok) throw new Error('Failed to fetch questions');
+                    
+                    const questions = await response.json();
+                    
+                    // Display questions
+                    questionsContainer.innerHTML = questions.map(q => `
+                        <div class="question-card">
+                            <h3>${q.question}</h3>
+                            <p><strong>Answer:</strong> ${q.correct_answer}</p>
+                            ${q.options ? `
+                                <div class="options">
+                                    <strong>Options:</strong>
+                                    <ul>
+                                        ${q.options.map(opt => `<li>${opt}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                            <button class="analyze-question" data-question-id="${q.id}">
+                                Analyze for Deception
+                            </button>
+                        </div>
+                    `).join('');
+                    
+                    // Add event listeners for analysis buttons
+                    document.querySelectorAll('.analyze-question').forEach(button => {
+                        button.addEventListener('click', async function() {
+                            const questionId = this.dataset.questionId;
+                            const question = questions.find(q => q.id === questionId);
+                            
+                            try {
+                                const analysisResponse = await fetch('/api/v1/detection/analyze-questions', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                                    },
+                                    body: JSON.stringify([question])
+                                });
+                                
+                                if (!analysisResponse.ok) throw new Error('Analysis failed');
+                                
+                                const analysis = await analysisResponse.json();
+                                
+                                // Display analysis results
+                                analysisContainer.innerHTML = `
+                                    <h3>Analysis Results</h3>
+                                    <div class="analysis-results">
+                                        <p><strong>Deception Probability:</strong> ${(analysis[0].probability * 100).toFixed(1)}%</p>
+                                        <p><strong>Confidence:</strong> ${(analysis[0].confidence * 100).toFixed(1)}%</p>
+                                        <div class="issues">
+                                            <strong>Issues Identified:</strong>
+                                            <ul>
+                                                ${analysis[0].issues.map(issue => `<li>${issue}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                        <div class="recommendations">
+                                            <strong>Recommendations:</strong>
+                                            <ul>
+                                                ${analysis[0].recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                `;
+                            } catch (error) {
+                                analysisContainer.innerHTML = `
+                                    <div class="error-message">
+                                        Error analyzing question: ${error.message}
+                                    </div>
+                                `;
+                            }
+                        });
+                    });
+                    
+                } catch (error) {
+                    questionsContainer.innerHTML = `
+                        <div class="error-message">
+                            Error fetching questions: ${error.message}
+                        </div>
+                    `;
                 }
             });
         });

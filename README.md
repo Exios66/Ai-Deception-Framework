@@ -1,123 +1,237 @@
 # AI Deception Framework
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.x-brightgreen.svg)
-![Flask](https://img.shields.io/badge/flask-v2.0+-brightgreen.svg)
-
-[GitBook Docs](https://morningstar-developments.gitbook.io/morningstar-docs/)
-
-## Overview
-
-The **AI Deception Framework** is a research tool designed to explore the potential for deception in artificial intelligence (AI) systems. It provides mechanisms to study, detect, and mitigate deceptive behaviors in AI models. The framework is useful for researchers, developers, and ethicists interested in understanding how AI could deceive humans or other systems, whether intentionally or unintentionally.
+A comprehensive framework for analyzing and detecting deception in AI systems, with integration to the Literary Vault API.
 
 ## Features
 
-- **Deception Detection**: Algorithms to identify potential deceptive patterns in AI-generated outputs.
-- **Scenario Simulation**: Tools to simulate environments and observe AI behaviors under different controlled scenarios.
-- **Ethical Analysis**: Evaluate the ethical implications of AI decisions and behaviors.
-- **Transparency Metrics**: Measure the transparency of AI decision-making and outputs.
-- **Mitigation Strategies**: Develop and test methods to reduce deceptive behaviors in AI systems.
+- AI Model Analysis
+- Deception Detection
+- Question Analysis Integration
+- Real-time Metrics Dashboard
+- Literary Vault API Integration
+- Open Source Collaboration
 
-## Project Structure
+## Installation
+
+1. Clone the repository:
 
 ```bash
-├── app.py                    # Main application file
-├── requirements.txt           # Project dependencies
-├── openapi.yaml               # OpenAPI specification for API documentation
-├── Randomized_Selection.py    # Script for selection algorithms
-├── templates/                 # HTML templates for web interface
-├── static/                    # Static files like JavaScript and CSS
-└── README.md                  # Project documentation
-```
-Installation
-
-Prerequisites
-
-Ensure you have the following installed:
-
-	•	Python 3.7 or higher
-	•	Pip package manager
-
-Setup Instructions
-
-	1.	Clone the repository:
-```
 git clone https://github.com/Exios66/Ai-Deception-Framework.git
 cd Ai-Deception-Framework
-
-	2.	Install the required dependencies:
- 
 ```
+
+2. Install dependencies:
+
+```bash
 pip install -r requirements.txt
+```
 
+3. Set up environment variables:
 
+```bash
+cp .env.example .env
+# Edit .env with your configuration:
+# GITHUB_TOKEN=your_github_token
+# DATABASE_URL=sqlite:///questions.db
+# JWT_SECRET=your_secret_key
+# CORS_ORIGINS=http://localhost:3000,https://yourdomain.com
+# API_KEY=your_openai_api_key
+```
 
-Running the Application
+## API Endpoints
 
-The application is built using Flask. You can run it locally as follows:
+### 1. Model Analysis
 
-	1.	Make the run script executable (if using a run script):
+Analyze AI models for potential deception:
 
-chmod +x run.sh
+```bash
+# Upload and analyze a model
+curl -X POST "http://localhost:8000/api/v1/analysis/model" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@/path/to/model.h5"
+```
 
+Response:
 
-	2.	Start the Flask server:
+```json
+{
+  "model_type": "neural_network",
+  "accuracy": 0.918,
+  "deception_points": [
+    "Potential bias in output layer",
+    "Unusual activation patterns"
+  ],
+  "recommendation": "Consider reviewing the model's training data for potential biases",
+  "confidence_score": 0.85
+}
+```
 
-./run.sh
+### 2. Deception Detection
 
-Alternatively, you can run the app manually with Python:
+Analyze content for potential deception:
 
-python app.py
+```bash
+# Analyze text content
+curl -X POST "http://localhost:8000/api/v1/detection/analyze" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "Your text content here",
+    "context": "Optional context"
+  }'
+```
 
+Response:
 
-	3.	Access the application at https://localhost:8000. Accept the self-signed certificate if prompted.
+```json
+{
+  "probability": 0.342,
+  "confidence": 0.89,
+  "issues": [
+    "Inconsistent narrative",
+    "Unusual language patterns"
+  ],
+  "recommendations": [
+    "Review content for consistency",
+    "Verify source authenticity"
+  ]
+}
+```
 
-API Documentation
+### 3. Literary Vault Integration
 
-The framework includes an API for interacting with local files, such as parsing and fetching questions. You can use the OpenAPI specification (openapi.yaml) to explore available endpoints.
+#### Get Questions
 
-Example API Request
+```bash
+# Get questions from a specific category
+curl "http://localhost:8000/api/v1/literary-vault/questions/astronomy?limit=5&random=true"
+```
 
-To fetch and parse questions from a local file, send a GET request to /fetch-local-questions:
+Response:
 
-curl "https://localhost:8000/fetch-local-questions?file_path=/path/to/your/file.db"
+```json
+[
+  {
+    "id": "q123",
+    "question": "What is the closest star to Earth?",
+    "correct_answer": "The Sun",
+    "options": ["The Sun", "Proxima Centauri", "Alpha Centauri", "Sirius"]
+  }
+]
+```
 
-OpenAPI Specification
+#### Randomize Questions
 
-The API follows the OpenAPI 3.1.0 specification, with a development server defined at https://localhost:8000. You can view the API documentation by loading the openapi.yaml file into any OpenAPI-compatible tool such as Swagger UI.
+```bash
+# Get randomized questions
+curl -X POST "http://localhost:8000/api/v1/literary-vault/questions/randomize" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "category": "astronomy",
+    "count": 5,
+    "seed": 12345
+  }'
+```
 
-Usage
+### 4. Question Analysis
 
-This framework can be used in various contexts, including:
+Analyze questions for potential deception:
 
-	•	Research: Studying how AI systems might engage in deceptive behaviors.
-	•	Testing: Running simulations to observe how an AI reacts in controlled deception scenarios.
-	•	Ethical Analysis: Measuring the transparency and ethicality of AI decision-making processes.
+```bash
+# Analyze a set of questions
+curl -X POST "http://localhost:8000/api/v1/detection/analyze-questions" \
+  -H "Content-Type: application/json" \
+  -d '[{
+    "id": "q123",
+    "question": "What is the closest star to Earth?",
+    "correct_answer": "The Sun"
+  }]'
+```
 
-Contributing
+## Python Client Examples
 
-Contributions are welcome! Please follow these steps to contribute:
+```python
+import httpx
+import asyncio
 
-	1.	Fork the repository.
-	2.	Create a new branch (git checkout -b feature-branch).
-	3.	Make your changes and commit them (git commit -am 'Add new feature').
-	4.	Push to the branch (git push origin feature-branch).
-	5.	Open a pull request.
+async def analyze_model(file_path: str):
+    async with httpx.AsyncClient() as client:
+        files = {'file': open(file_path, 'rb')}
+        response = await client.post(
+            'http://localhost:8000/api/v1/analysis/model',
+            files=files
+        )
+        return response.json()
 
-Please ensure your code adheres to the existing coding style and passes any tests.
+async def detect_deception(content: str):
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            'http://localhost:8000/api/v1/detection/analyze',
+            json={'content': content}
+        )
+        return response.json()
 
-License
+async def get_and_analyze_questions():
+    async with httpx.AsyncClient() as client:
+        # Get questions
+        questions = await client.get(
+            'http://localhost:8000/api/v1/literary-vault/questions/astronomy',
+            params={'limit': 5}
+        )
+        
+        # Analyze them for deception
+        analysis = await client.post(
+            'http://localhost:8000/api/v1/detection/analyze-questions',
+            json=questions.json()
+        )
+        return analysis.json()
+```
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+## Development
 
-Future Plans
+### Running Tests
 
-	•	Extend the deception detection algorithms.
-	•	Improve simulation tools with more diverse and complex scenarios.
-	•	Incorporate machine learning techniques for better detection and mitigation of deceptive behavior.
+```bash
+pytest tests/
+```
 
-Acknowledgments
+### Local Development
 
-Thanks to all contributors and users who have tested and provided feedback for this framework.
+```bash
+uvicorn api.main:app --reload
+```
 
-This README includes clearer sections, usage instructions, API documentation, and a more structured format that follows best practices. Let me know if you'd like to add more details!
+### Docker Deployment
+
+```bash
+docker build -t ai-deception-framework .
+docker run -p 8000:8000 ai-deception-framework
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## API Documentation
+
+Full API documentation is available at:
+
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Literary Vault API Integration
+- OpenAI API Integration
+- Contributors and maintainers
+
+## Support
+
+For support, please open an issue in the GitHub repository or contact the maintainers.
